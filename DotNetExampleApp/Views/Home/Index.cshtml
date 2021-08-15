@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h1 class="text-center" id="title">Student List</h1>
+
+    <button type="button" class="btn btn-primary" id="addStudentBtn">Add New Student</button>
+
+    <table class="table" id="studentsTbl">
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Grade</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var student in ViewBag.studentList)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.FName</td>
+                <td>@student.LName</td>
+                <td>@student.CurrGrade</td>
+                <td>@student.Age</td>
+                <td>
+                    <a href="javascript:void(0)" onclick="showEditModal(@student.Id, '@student.FName', '@student.LName', @student.CurrGrade, @student.Age)">Edit</a> |
+                    <a href="javascript:void(0)" onclick="deleteStudent(@student.Id)">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <!-- add/edit student modal -->
+    <div class="modal fade" id="addEditStudentMdl" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEditModalTitle"><!--populated by js--></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addStudentFrm">
+                        <div class="form-group">
+                            <label for="FName">First Name:</label>
+                            <input type="text" id="FName" class="form-control" maxlength="100" />
+                            <i class="errorTxt" id="fNameError" hidden>Please enter a valid first name</i>
+                        </div>
+                        <div class="form-group">
+                            <label for="LName">Last Name:</label>
+                            <input type="text" id="LName" class="form-control" maxlength="100" />
+                            <i class="errorTxt" id="lNameError" hidden>Please enter a valid last name</i>
+                        </div>
+                        <div class="form-group">
+                            <label for="CurrGrade">Grade:</label>
+                            <input type="number" id="CurrGrade" class="form-control" max="100" />
+                            <i class="errorTxt" id="gradeError" hidden>Please enter a valid grade</i>
+                        </div>
+                        <div class="form-group">
+                            <label for="Age">Age:</label>
+                            <input type="number" id="Age" class="form-control" max="130" />
+                            <i class="errorTxt" id="ageError" hidden>Please enter a valid age</i>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="saveChangesBtn"><!--populated by js--></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
